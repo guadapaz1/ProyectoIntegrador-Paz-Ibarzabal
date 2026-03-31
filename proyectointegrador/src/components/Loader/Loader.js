@@ -1,8 +1,8 @@
-import React from 'react'
+import React from "react";
 
 function Loader() {
   return (
-    <div>Loader</div>
+    <p>Cargando...</p>
   )
 }
 
