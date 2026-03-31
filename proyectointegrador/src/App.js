@@ -12,6 +12,7 @@ import Detalle from "./screens/Detalle/Detalle";
 import ResultadosBusqueda from "./screens/ResultadosBusqueda/ResultadosBusqueda";
 import Notfound from "./screens/NotFound/NotFound";
 
+//no entiendo el problema en las rutas
 
 function App() {
   return (
