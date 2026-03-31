@@ -1,11 +1,22 @@
 import React, { Component } from 'react'
+import Registro from  "../../components/Registro/Registro"
 
 class Login extends Component {
-  render() {
-    return (
-      <div>Login</div>
-    )
-  }
+
+    constructor(props){
+        super(props);
+        this.state = {
+            
+        }
+    }
+    
+    render(){
+        return(
+            <Registro/>
+        );
+    }
+
 }
 
-export default Login
+
+export default Login;
