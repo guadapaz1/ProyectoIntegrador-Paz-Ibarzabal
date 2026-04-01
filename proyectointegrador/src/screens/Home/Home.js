@@ -32,14 +32,14 @@ class Home extends Component {
         <section className="container">
             <h2 className="alert alert-primary">Movies now playing</h2>
             <section className="row cards" id="now-playing">
-                {this.state.peliculas === "" ? <Loader/> :
-                this.state.peliculas.map((elemento, idx) => <Card key={elemento +idx} data={elemento}/> )}        
+                {this.state.peliculas.length === 0 ? <Loader/> :
+                this.state.peliculas.slice(0, 6).map((elemento, idx) => <Card key={elemento +idx} data={elemento}/> )}        
             </section>
             <a href="/peliculas">Ver todas</a>
             <h2 className="alert alert-warning">Popular TV shows this week</h2>
-            <section className="row cards" id="tv-show">
-                {this.state.series === "" ? <Loader/> :
-                this.state.series.map((elemento, idx) => <Card key={elemento +idx} data={elemento}/> )}
+            <section className="row cards tv-show">
+                {this.state.series.length === 0 ? <Loader/> :
+                this.state.series.slice(0, 6).map((elemento, idx) => <Card key={elemento +idx} data={elemento}/> )}
             </section>
             <a href="/series">Ver todas</a>
         </section>

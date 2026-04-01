@@ -1,9 +1,11 @@
 nav {
-    display: grid;
-    grid-template-columns: 1fr;
+    display: flex;
+    gap: 10px;
+    align-items: center;
     background-color: #eee;
     border-radius: 4px;
     margin-bottom: 20px;
+    padding: 10px;
 }
 .nav {
     margin: 0 !important;
@@ -52,6 +54,9 @@ nav {
 }
 .cardBody {
     margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 .single-card-people {
     width: 19%;
@@ -89,4 +94,11 @@ nav {
     nav {
         grid-template-columns: 1fr;
     }
+}
+
+img {
+    width: 100%;
+}
+.detalle-img{
+    width: 300px;
 }
