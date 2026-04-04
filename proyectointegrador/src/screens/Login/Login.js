@@ -32,6 +32,8 @@ class Login extends Component {
         this.setState({ error: "La contraseña es incorrecta" });
       } else {
         this.setState({ error: "" })
+        alert("Inicio correcto");
+        window.location.href = "/"; // --> ???
         }
 
         }
@@ -58,7 +60,7 @@ class Login extends Component {
                         <input value= {this.state.password} onChange={(event) => this.controlarCambios(event)} name="password" className="form-control" id="password" placeholder="Ingresá tu contraseña"/>
                         <p>{this.state.error}</p>
                     </div>
-                    <button type="submit" className="btn btn-primary btn-block">Iniciar sesión</button>
+                    <button type="submit" className="btn btn-primary btn-block"> Iniciar sesión</button>
                 </form>
                 <p className="mt-3 text-center">¿No tenés cuenta? <Link to="/CrearCuenta">Registrarse</Link></p>
             </div>

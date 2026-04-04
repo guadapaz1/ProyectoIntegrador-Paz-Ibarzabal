@@ -37,6 +37,8 @@ class CrearCuenta extends Component {
         let usuariosEnString = JSON.stringify(usuarios);
         localStorage.setItem("usuarios", usuariosEnString);
       } 
+      alert("Registro correcto");
+      window.location.href = "/login"; //--> ?????
     } 
 
     controlarCambios(event){

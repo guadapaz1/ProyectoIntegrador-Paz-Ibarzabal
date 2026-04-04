@@ -15,7 +15,7 @@ class Header extends Component {
           <a href="/peliculas">Películas</a>
           <a href="/series">Series</a>
           <a href="/login">Login</a>
-          <a href="/crear-cuenta">Crear Cuenta</a> 
+          <a href="/CrearCuenta">Crear Cuenta</a> 
           <a href="/favoritos">Favoritos</a>
         </nav>
       </header>
