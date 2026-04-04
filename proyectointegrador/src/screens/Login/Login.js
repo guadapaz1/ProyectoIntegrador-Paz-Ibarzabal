@@ -1,40 +1,74 @@
 import React, { Component } from 'react'
+import { Link } from "react-router-dom";
+import Header from '../../components/Header/Header';
 
 class Login extends Component {
 
     constructor(props){
         super(props);
         this.state = {
-            
+            email:"",
+            password: "",
+            error:"",
         }
     }
-    
+        evitarSubmit(event){
+      event.preventDefault()
+
+      let usuariosGuardados = localStorage.getItem("usuarios");
+      let usuarios = usuariosGuardados ? JSON.parse(usuariosGuardados) : []
+
+      let mismoEmail = null;
+
+      for (let i = 0; i < usuarios.length; i++) {
+        if (usuarios[i].email === this.state.email) {
+          mismoEmail = usuarios[i];
+        }
+      }
+
+      if (!mismoEmail) {
+        this.setState({ error: "El usuario no existe" });
+      } else if (mismoEmail.password !== this.state.password) {
+        this.setState({ error: "La contraseña es incorrecta" });
+      } else {
+        this.setState({ error: "" })
+        }
+
+        }
+
+    controlarCambios(event){
+      this.setState({[event.target.name]: event.target.value})
+    }
+
     
     render(){
         return(
            <>
+           
     <div className="row justify-content-center">
             <div className="col-md-6">
-                <form >
+                <form onSubmit={(event) => this.evitarSubmit(event)}>
                     <div className="form-group">
-                        <label for="email">Email</label>
-                        <input type="email"
+                        <label htmlFor="email">Email</label>
+                        <input  value= {this.state.email} onChange={(event) => this.controlarCambios(event)} name="email"
                     className="form-control" id="email" placeholder="Ingresá tu email"/>
                     </div>
                     <div className="form-group">
-                        <label for="password">Contraseña</label>
-                        <input type="password" className="form-control" id="password" placeholder="Ingresá tu contraseña"/>
+                        <label htmlFor="password">Contraseña</label>
+                        <input value= {this.state.password} onChange={(event) => this.controlarCambios(event)} name="password" className="form-control" id="password" placeholder="Ingresá tu contraseña"/>
+                        <p>{this.state.error}</p>
                     </div>
                     <button type="submit" className="btn btn-primary btn-block">Iniciar sesión</button>
                 </form>
-                <p className="mt-3 text-center">¿No tenés cuenta? <a href="./CrearCuenta/CrearCuenta.js">Registrarse</a></p>
+                <p className="mt-3 text-center">¿No tenés cuenta? <Link to="/CrearCuenta">Registrarse</Link></p>
             </div>
         </div>
         </>
         );
     }
-
 }
+
+
 
 
 export default Login;

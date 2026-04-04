@@ -7,38 +7,41 @@ class CrearCuenta extends Component {
             email:"",
             password: "",
             error:"",
-            
         }
     }
-    
+  
     evitarSubmit(event){
       event.preventDefault()
 
-    let usuariosGuardados = localStorage.getItem("usuarios");
-    let usuarios = usuariosGuardados ? JSON.parse(usuariosGuardados) : []
+      let usuariosGuardados = localStorage.getItem("usuarios");
+      let usuarios = usuariosGuardados ? JSON.parse(usuariosGuardados) : []
 
-    let emailEnUso = false;
+      let emailEnUso = false;
 
-    for (let i = 0; i < this.state.usuarios.length; i++) {
-      if (this.state.usuarios[i].email === this.state.email) {
-        emailEnUso = true;
+      for (let i = 0; i < usuarios.length; i++) {
+        if (usuarios[i].email === this.state.email) {
+          emailEnUso = true;
+        }
       }
-    }
-    emailEnUso ? this.setState({error: "El mail ya esta en uso"}):
-    this.state.password.length < 6 ? this.setState({error: "La contraseña debe tener al menos 6 caracteres"}) :
-    (this.state.usuarios.push({
-      email: this.state.email,
-      password: this.state.password
-    }))
-      let usuariosEnString = JSON.stringify(usuarios);
-      localStorage.setItem("usuarios", usuariosEnString);
 
-    }
+      if (emailEnUso) {
+        this.setState({ error: "El mail ya esta en uso" });
+      } else if (this.state.password.length < 6) {
+        this.setState({ error: "La contraseña debe tener al menos 6 caracteres" });
+      } else {
+        usuarios.push({
+            email: this.state.email,
+            password: this.state.password
+        })
+
+        let usuariosEnString = JSON.stringify(usuarios);
+        localStorage.setItem("usuarios", usuariosEnString);
+      } 
+    } 
 
     controlarCambios(event){
       this.setState({[event.target.name]: event.target.value})
     }
-
 
   render() {
     return (
@@ -53,13 +56,13 @@ class CrearCuenta extends Component {
                     <div className="form-group">
                         <label htmlFor="password">Contraseña</label>
                         <input name="password" onChange= {(event) => this.controlarCambios(event)} value={this.state.password} type="password" className="form-control" id="password" placeholder="Ingresá tu contraseña"/>
+                        <p>{this.state.error}</p>
                     </div>
                     <button type="submit" className="btn btn-primary btn-block">Registrarse</button>
                 </form>
                 <p className="mt-3 text-center">¿Ya tenés cuenta? <a href="./Login/Login.js">Iniciar sesión</a></p>
             </div>
         </div>
-      
       </>
     )
   }
