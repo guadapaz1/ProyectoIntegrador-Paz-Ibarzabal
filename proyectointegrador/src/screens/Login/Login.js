@@ -33,7 +33,6 @@ class Login extends Component {
       } else {
         this.setState({ error: "" })
         alert("Inicio correcto");
-        window.location.href = "/"; // --> ???
         }
 
         }

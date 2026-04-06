@@ -12,14 +12,14 @@ import Detalle from "./screens/Detalle/Detalle";
 import ResultadosBusqueda from "./screens/ResultadosBusqueda/ResultadosBusqueda";
 import Notfound from "./screens/NotFound/NotFound";
 
-//no entiendo el problema en las rutas
 
 function App() {
   return (
     <>
       <Header />
       <Switch>
-        <Route path="/" exact= {true} component={Home} />
+        <Route path="/" exact= {true} //(atributo booleano)
+         component={Home} />
         <Route path="/login" component={Login}/>
         <Route path="/crearCuenta" component={CrearCuenta}/>
         <Route path="/favoritos" component={Favoritos} />

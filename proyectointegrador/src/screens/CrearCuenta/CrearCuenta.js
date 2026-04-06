@@ -32,13 +32,15 @@ class CrearCuenta extends Component {
         usuarios.push({
             email: this.state.email,
             password: this.state.password
+            
         })
+
+        alert("Registro correcto");
 
         let usuariosEnString = JSON.stringify(usuarios);
         localStorage.setItem("usuarios", usuariosEnString);
       } 
-      alert("Registro correcto");
-      window.location.href = "/login"; //--> ?????
+      
     } 
 
     controlarCambios(event){
