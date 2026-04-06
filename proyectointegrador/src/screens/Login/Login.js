@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Link } from "react-router-dom";
-import Header from '../../components/Header/Header';
 
 class Login extends Component {
 
@@ -15,8 +14,8 @@ class Login extends Component {
         evitarSubmit(event){
       event.preventDefault()
 
-      let usuariosGuardados = localStorage.getItem("usuarios");
-      let usuarios = usuariosGuardados ? JSON.parse(usuariosGuardados) : []
+      
+      let usuarios = []
 
       let mismoEmail = null;
 

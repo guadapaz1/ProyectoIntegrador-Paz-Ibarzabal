@@ -29,6 +29,13 @@ class Home extends Component {
 
   render() {
     return (
+    
+      <>
+      <form className="search-form" action="results.html" method="get">
+            <input type="text" class="" nameName="searchData" placeholder="Buscar..." value=""/>
+            <button type="submit" className="btn btn-success btn-sm">Buscar</button>
+      </form>
+
         <section className="container">
             <h2 className="alert alert-primary">Movies now playing</h2>
             <section className="row cards" id="now-playing">
@@ -43,6 +50,7 @@ class Home extends Component {
             </section>
             <a href="/series">Ver todas</a>
         </section>
+        </>
     );
   }
 }

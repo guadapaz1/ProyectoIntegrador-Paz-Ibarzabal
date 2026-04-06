@@ -84,30 +84,26 @@ componentDidMount() {
   render() {
     return (
       <article className="single-card-playing">
-        <img src={"https://image.tmdb.org/t/p/w500" + this.props.data.poster_path} />
+        <img src={"https://image.tmdb.org/t/p/w500" + this.props.data.poster_path} alt= ""/>
         <div className="cardBody">
             <h3>{this.props.data.title || this.props.data.name}</h3>
 
             {this.state.mostrar === true ? <p className="card-text">{this.props.data.overview}</p> : ""}
 
-            {this.state.mostrar === false ? (<button onClick={() => this.mostrarDescripcion()}>Ver descripción</button>) 
-              : (<button onClick={() => this.ocultarDescripcion()}>Ocultar descripción</button>
+            {this.state.mostrar === false ? (<button className="btn alert-primary"  onClick={() => this.mostrarDescripcion()}>Ver descripción</button>) 
+              : (<button className="btn alert-primary"  onClick={() => this.ocultarDescripcion()}>Ocultar descripción</button>
             )}
 
-            <Link to={`/detalle/${this.props.data.title ? "movie" : "tv"}/${this.props.data.id}`}>Ver más</Link>
+            <Link className="btn btn-primary" to={`/detalle/${this.props.data.title ? "movie" : "tv"}/${this.props.data.id}`}>Ver más</Link>
 
            {this.state.esFavorito === false ? (
-            <button onClick={() => this.agregarFav(this.props.data.id)}>
-              Agregar a favoritos
-            </button>
+            <button onClick={() => this.agregarFav(this.props.data.id)} className="btn alert-primary"> 🤍 </button>
           ) : (
-            <button onClick={() => this.sacarFav(this.props.data.id)}>
+            <button className="btn alert-primary" onClick={() => this.sacarFav(this.props.data.id)}>
               Eliminar de favoritos
             </button>
           )}
-
         </div>
-
       </article>
     );
   }

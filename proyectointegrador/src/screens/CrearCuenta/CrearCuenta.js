@@ -13,8 +13,7 @@ class CrearCuenta extends Component {
     evitarSubmit(event){
       event.preventDefault()
 
-      let usuariosGuardados = localStorage.getItem("usuarios");
-      let usuarios = usuariosGuardados ? JSON.parse(usuariosGuardados) : []
+      let usuarios = []
 
       let emailEnUso = false;
 
@@ -36,9 +35,6 @@ class CrearCuenta extends Component {
         })
 
         alert("Registro correcto");
-
-        let usuariosEnString = JSON.stringify(usuarios);
-        localStorage.setItem("usuarios", usuariosEnString);
       } 
       
     } 
