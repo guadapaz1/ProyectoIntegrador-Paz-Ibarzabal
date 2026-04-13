@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
 import { Link } from "react-router-dom";
+import Cookies from "universal-cookie"
+
+const cookies = new Cookies()
 
 class Login extends Component {
 
@@ -14,9 +17,8 @@ class Login extends Component {
         evitarSubmit(event){
       event.preventDefault()
 
+      let usuarios = JSON.parse(localStorage.getItem('usuarios')) || []
       
-      let usuarios = []
-
       let mismoEmail = null;
 
       for (let i = 0; i < usuarios.length; i++) {
@@ -30,20 +32,22 @@ class Login extends Component {
       } else if (mismoEmail.password !== this.state.password) {
         this.setState({ error: "La contraseña es incorrecta" });
       } else {
-        this.setState({ error: "" })
-        alert("Inicio correcto");
-        }
+        this.setState({ error: "" })}
+        cookies.set("session", mismoEmail)
+        this.props.history.push("/")
 
         }
 
     controlarCambios(event){
-      this.setState({[event.target.name]: event.target.value})
+        if (event.target.name === "email") {
+            this.setState({ email: event.target.value })
+        } else if (event.target.name === "password") {
+            this.setState({ password: event.target.value })
+        }
     }
 
-    
     render(){
         return(
-           <>
            
     <div className="row justify-content-center">
             <div className="col-md-6">
@@ -63,12 +67,8 @@ class Login extends Component {
                 <p className="mt-3 text-center">¿No tenés cuenta? <Link to="/CrearCuenta">Registrarse</Link></p>
             </div>
         </div>
-        </>
         );
     }
 }
-
-
-
 
 export default Login;

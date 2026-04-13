@@ -1,4 +1,8 @@
 import React, { Component } from 'react'
+import Cookies from "universal-cookie"
+import { Link } from "react-router-dom"
+
+const cookies = new Cookies()
 
 class CrearCuenta extends Component {
   constructor(props){
@@ -11,36 +15,48 @@ class CrearCuenta extends Component {
     }
   
     evitarSubmit(event){
-      event.preventDefault()
-
-      let usuarios = []
-
-      let emailEnUso = false;
-
-      for (let i = 0; i < usuarios.length; i++) {
-        if (usuarios[i].email === this.state.email) {
-          emailEnUso = true;
+      
+        event.preventDefault()
+        let usuarios 
+        if (JSON.parse(localStorage.getItem('usuarios')) != null){
+            usuarios = JSON.parse(localStorage.getItem('usuarios'))
+        } else{
+            usuarios = []
         }
-      }
 
-      if (emailEnUso) {
-        this.setState({ error: "El mail ya esta en uso" });
-      } else if (this.state.password.length < 6) {
-        this.setState({ error: "La contraseña debe tener al menos 6 caracteres" });
-      } else {
-        usuarios.push({
+        let emailEnUso = false;
+
+        for (let i = 0; i < usuarios.length; i++) {
+          if (usuarios[i].email === this.state.email) {
+             emailEnUso = true;
+           }
+        }
+
+        if (emailEnUso) {
+            this.setState({ error: "El mail ya esta en uso" });
+        } else if (this.state.password.length < 6) {
+            this.setState({ error: "La contraseña debe tener al menos 6 caracteres" });
+        } else {
+            let nuevoUsuario = {
             email: this.state.email,
             password: this.state.password
-            
-        })
+            }
+            usuarios.push(nuevoUsuario)
 
-        alert("Registro correcto");
-      } 
+            localStorage.setItem('usuarios', JSON.stringify(usuarios))
+
+            this.props.history.push("/login")
+
+        } 
       
     } 
 
     controlarCambios(event){
-      this.setState({[event.target.name]: event.target.value})
+        if (event.target.name === "email") {
+            this.setState({ email: event.target.value })
+        } else if (event.target.name === "password") {
+            this.setState({ password: event.target.value })
+        }
     }
 
   render() {
@@ -60,7 +76,7 @@ class CrearCuenta extends Component {
                     </div>
                     <button type="submit" className="btn btn-primary btn-block">Registrarse</button>
                 </form>
-                <p className="mt-3 text-center">¿Ya tenés cuenta? <a href="./Login/Login.js">Iniciar sesión</a></p>
+                <p className="mt-3 text-center">¿Ya tenés cuenta? <Link to="/login">Iniciar sesión</Link></p>
             </div>
         </div>
       </>
