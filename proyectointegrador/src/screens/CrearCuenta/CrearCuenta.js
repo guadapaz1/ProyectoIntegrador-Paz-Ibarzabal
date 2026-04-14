@@ -44,6 +44,7 @@ class CrearCuenta extends Component {
             usuarios.push(nuevoUsuario)
 
             localStorage.setItem('usuarios', JSON.stringify(usuarios))
+            cookies.set(nuevoUsuario)
 
             this.props.history.push("/login")
 
