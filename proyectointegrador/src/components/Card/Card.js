@@ -11,64 +11,58 @@ class Card extends Component {
   }
 componentDidMount() {
   
-            let storage = localStorage.getItem("favoritos");
-            let storageParseado = JSON.parse(storage);
+           let tipo = this.props.data.title ? "favoritosMovies" : "favoritosSeries";
 
-            let favorito = false;
+    let storage = localStorage.getItem(tipo);
+    let storageParseado = storage ? JSON.parse(storage) : [];
 
-            if (storageParseado !== null) {
-              for (let i=0; i< storageParseado.length; i++){
-                if(storageParseado[i] === this.props.data.id){
-                  favorito=true
-                }
-              }
-            }
+    let favorito = false;
 
-            this.setState({
-                esFavorito: favorito
-            });
+    for (let i = 0; i < storageParseado.length; i++) {
+        if (storageParseado[i] === this.props.data.id) {
+            favorito = true;
         }
-        
-  
-  agregarFav(id){
-    let storage = localStorage.getItem("favoritos");
-    let storageParseado = JSON.parse(storage);
-
-    if(storageParseado !== null){
-        storageParseado.push(id);
-        let storageString = JSON.stringify(storageParseado);
-        localStorage.setItem("favoritos", storageString);
-    } 
-    else {
-        let primerFav = [id];
-        let storageString = JSON.stringify(primerFav);
-        localStorage.setItem("favoritos", storageString);
-    } 
-    
-    this.setState(
-        {esFavorito: true});
-  }
-
-  sacarFav(id){
-    let storage = localStorage.getItem("favoritos");
-    let storageParseado = JSON.parse(storage);
-
-    let array= []
-
-    for (let i =0; i< storageParseado.length; i++){
-      if (storageParseado[i] !== id){
-        array.push(storageParseado[i])
-      }
     }
 
-    let storageString = JSON.stringify(array);
-    localStorage.setItem("favoritos", storageString);
-
     this.setState({
-        esFavorito: false
+        esFavorito: favorito
     });
 }
+  
+ agregarFav(id){
+  let tipo = this.props.data.title ? "favoritosMovies" : "favoritosSeries";
 
+  let storage = localStorage.getItem(tipo);
+  let storageParseado = storage ? JSON.parse(storage) : [];
+
+  storageParseado.push(id);
+  let storageString = JSON.stringify(storageParseado);
+  localStorage.setItem(tipo, storageString);
+
+  this.setState({
+    esFavorito: true
+  });
+}
+sacarFav(id){
+  let tipo = this.props.data.title ? "favoritosMovies" : "favoritosSeries";
+
+  let storage = localStorage.getItem(tipo);
+  let storageParseado = storage ? JSON.parse(storage) : [];
+
+  let arrayNuevo = [];
+
+  for(let i = 0; i < storageParseado.length; i++){
+    if(storageParseado[i] !== id){
+      arrayNuevo.push(storageParseado[i]);
+    }
+  }
+
+  localStorage.setItem(tipo, JSON.stringify(arrayNuevo));
+
+  this.setState({
+    esFavorito: false
+  });
+}
   mostrarDescripcion() {
     this.setState({
       mostrar: true

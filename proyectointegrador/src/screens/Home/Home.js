@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Card from "../../components/Card/Card";
 import Loader from "../../components/Loader/Loader";
+import Formulario from "../../components/Formulario/Formulario";
 
 class Home extends Component {
   constructor(props) {
@@ -31,11 +32,8 @@ class Home extends Component {
     return (
     
       <>
-      <form className="search-form" action="results.html" method="get">
-            <input type="text" class="" nameName="searchData" placeholder="Buscar..." value=""/>
-            <button type="submit" className="btn btn-success btn-sm">Buscar</button>
-      </form>
-
+      
+        <Formulario/>
         <section className="container">
             <h2 className="alert alert-primary">Movies now playing</h2>
             <section className="row cards" id="now-playing">
