@@ -41,9 +41,9 @@ class ResultadosBusqueda extends Component {
 
     render(){
         return(
-            <section >
+            <section>
                 <h2>Resultados de {this.props.match.params.tipo} para: {this.props.match.params.busqueda}</h2>
-
+                <section className="cards">
                 {this.state.cargando ? (
                     <h3>Cargando...</h3>
                 ) : this.state.resultados.length === 0 ? (
@@ -53,6 +53,7 @@ class ResultadosBusqueda extends Component {
                         <Card key={elemento.id} data={elemento}/>
                     ))
                 )}
+                </section>
             </section>
         );
     }

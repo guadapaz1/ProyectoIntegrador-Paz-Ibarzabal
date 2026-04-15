@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import Cookies from "universal-cookie";
+
+const cookies = new Cookies()
 
 class Card extends Component {
   constructor(props) {
@@ -76,6 +79,7 @@ sacarFav(id){
   }
 
   render() {
+    let user = cookies.get("session");
     return (
       <article className="single-card-playing">
         <img src={"https://image.tmdb.org/t/p/w500" + this.props.data.poster_path} alt= ""/>
@@ -89,15 +93,15 @@ sacarFav(id){
             )}
 
             <Link className="btn btn-primary" to={`/detalle/${this.props.data.title ? "movie" : "tv"}/${this.props.data.id}`}>Ver más</Link>
-
-           {this.state.esFavorito === false ? (
+            
+            {user ? (this.state.esFavorito === false ? (
             <button onClick={() => this.agregarFav(this.props.data.id)} className="btn alert-primary"> 🤍 </button>
           ) : (
             <button className="btn alert-primary" onClick={() => {if (this.props.eliminarFavorito) {
                 this.props.eliminarFavorito();}
                 else {
                     this.sacarFav(this.props.data.id);}}}> Eliminar de favoritos </button>
-          )}
+          )) : null}
         </div>
       </article>
     );

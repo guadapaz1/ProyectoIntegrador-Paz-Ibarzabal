@@ -76,7 +76,7 @@ class Favoritos extends Component {
         if (this.state.peliculasFavoritas[i].id !== id) {
           nuevasPeliculas.push(this.state.peliculasFavoritas[i]);
         }}
-        
+
       this.setState({
         peliculasFavoritas: nuevasPeliculas
       });
@@ -109,24 +109,22 @@ class Favoritos extends Component {
       <section className="cardContainer">
 
         <h2>Películas favoritas</h2>
-
+        <section className="cards">
         {this.state.peliculasFavoritas.length === 0 ? ( <h3>No hay películas favoritas</h3>) 
         : (this.state.peliculasFavoritas.map(elemento => (
-            <div key={elemento.id}>
-              <Card data={elemento} eliminarFavorito={() => this.eliminarFavorito(elemento.id, "movie")}/>
-            </div>
+              <Card key={elemento.id} data={elemento} eliminarFavorito={() => this.eliminarFavorito(elemento.id, "movie")}/>
           ))
         )}
+        </section>
 
         <h2>Series favoritas</h2>
-
+        <section className="cards">
         {this.state.seriesFavoritas.length === 0 ? (<h3>No hay series favoritas</h3>) 
         : (this.state.seriesFavoritas.map(elemento => (
-            <div key={elemento.id}>
-              <Card data={elemento} eliminarFavorito={() => this.eliminarFavorito(elemento.id, "tv")}/>
-            </div>
+              <Card key={elemento.id} data={elemento} eliminarFavorito={() => this.eliminarFavorito(elemento.id, "tv")}/>
           ))
         )}
+        </section>
 
       </section>
     );

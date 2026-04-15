@@ -49,9 +49,11 @@ nav {
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: flex-start;
     margin-bottom: 2%;
+    gap: 15px;
 }
+
 .cardBody {
     margin-top: 20px;
     display: flex;

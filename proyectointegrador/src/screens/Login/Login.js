@@ -14,18 +14,24 @@ class Login extends Component {
             error:"",
         }
     }
-        evitarSubmit(event){
-      event.preventDefault()
+    evitarSubmit(event){
+        event.preventDefault()
 
-      let usuarios = usuarios ? JSON.parse(localStorage.getItem('usuarios')) : []
-      
-      let mismoEmail = null;
+        let storage = localStorage.getItem('usuarios');
+        let usuarios;
 
-      for (let i = 0; i < usuarios.length; i++) {
-        if (usuarios[i].email === this.state.email) {
-          mismoEmail = usuarios[i];
+        if (storage !== null) {
+            usuarios = JSON.parse(storage);
+        } else {
+            usuarios = [];
         }
-      }
+        let mismoEmail = null;
+
+        for (let i = 0; i < usuarios.length; i++) {
+            if (usuarios[i].email === this.state.email) {
+                mismoEmail = usuarios[i];
+            }
+        }
       
 
       if (!mismoEmail) {
