@@ -11,7 +11,7 @@ class Card extends Component {
   }
 componentDidMount() {
   
-           let tipo = this.props.data.title ? "favoritosMovies" : "favoritosSeries";
+    let tipo = this.props.data.title ? "favoritosMovies" : "favoritosSeries";
 
     let storage = localStorage.getItem(tipo);
     let storageParseado = storage ? JSON.parse(storage) : [];
@@ -28,8 +28,8 @@ componentDidMount() {
         esFavorito: favorito
     });
 }
-  
- agregarFav(id){
+
+agregarFav(id){
   let tipo = this.props.data.title ? "favoritosMovies" : "favoritosSeries";
 
   let storage = localStorage.getItem(tipo);
@@ -93,9 +93,10 @@ sacarFav(id){
            {this.state.esFavorito === false ? (
             <button onClick={() => this.agregarFav(this.props.data.id)} className="btn alert-primary"> 🤍 </button>
           ) : (
-            <button className="btn alert-primary" onClick={() => this.sacarFav(this.props.data.id)}>
-              Eliminar de favoritos
-            </button>
+            <button className="btn alert-primary" onClick={() => {if (this.props.eliminarFavorito) {
+                this.props.eliminarFavorito();}
+                else {
+                    this.sacarFav(this.props.data.id);}}}> Eliminar de favoritos </button>
           )}
         </div>
       </article>

@@ -17,7 +17,7 @@ class Login extends Component {
         evitarSubmit(event){
       event.preventDefault()
 
-      let usuarios = JSON.parse(localStorage.getItem('usuarios')) || []
+      let usuarios = usuarios ? JSON.parse(localStorage.getItem('usuarios')) : []
       
       let mismoEmail = null;
 

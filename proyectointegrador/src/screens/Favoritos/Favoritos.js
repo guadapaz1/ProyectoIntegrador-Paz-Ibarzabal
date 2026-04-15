@@ -1,85 +1,136 @@
 import React, { Component } from "react";
 import Card from "../../components/Card/Card";
+import Cookies from "universal-cookie";
+
+const cookies = new Cookies();
 
 class Favoritos extends Component {
-    constructor(props){
-        super(props);
-        this.state = {
+  constructor(props) {
+    super(props);
+    this.state = {
       peliculasFavoritas: [],
       seriesFavoritas: [],
-      cargando: true
-}
+    };
+  }
+
+  componentDidMount() {
+    let user = cookies.get("session");
+    
+    if (user == null) {
+        this.props.history.push("/login");
     }
 
-    componentDidMount(){
-        let storageMovies = localStorage.getItem("favoritosMovies");
-        let storageSeries = localStorage.getItem("favoritosSeries");
+    let storageMovies = localStorage.getItem("favoritosMovies");
+    let storageSeries = localStorage.getItem("favoritosSeries");
 
-        let moviesParseado = storageMovies ? JSON.parse(storageMovies) : [];
-        let seriesParseado = storageSeries ? JSON.parse(storageSeries) : [];
+    let moviesParseado = storageMovies ? JSON.parse(storageMovies) : [];
+    let seriesParseado = storageSeries ? JSON.parse(storageSeries) : [];
+    
+    for (let i = 0; i < moviesParseado.length; i++) {
+      fetch(`https://api.themoviedb.org/3/movie/${moviesParseado[i]}?api_key=41abfd625c63035603389ca24c10eed0`)
+        .then(response => response.json())
+        .then(data => {
+            let lista = this.state.peliculasFavoritas;
+            lista.push(data);
 
-        if (moviesParseado.length === 0 && seriesParseado.length === 0) {
-    this.setState({
-        peliculasFavoritas: [],
-        seriesFavoritas: [],
-        cargando: false
-    });
-        } else {
-            let pedidosMovies = moviesParseado.map(id =>
-            fetch(`https://api.themoviedb.org/3/movie/${id}??api_key=41abfd625c63035603389ca24c10eed0`)
-            .then(response => response.json())
-            );
-            let pedidosSeries = seriesParseado.map(id =>
-            fetch(`https://api.themoviedb.org/3/tv/${id}??api_key=41abfd625c63035603389ca24c10eed0`)
-            .then(response => response.json())
-            );
+            this.setState({
+                peliculasFavoritas: lista
+            });
+        })
+        .catch(error => console.log(error));
+    }
 
-            Promise.all([
-  Promise.all(pedidosMovies),
-  Promise.all(pedidosSeries)
-])
-.then(([peliculasRecuperadas, seriesRecuperadas]) => {
-  this.setState({
-    peliculasFavoritas: peliculasRecuperadas,
-    seriesFavoritas: seriesRecuperadas,
-    cargando: false
-  });
-})
-.catch(error => {
-  console.log(error);
-  this.setState({
-    peliculasFavoritas: [],
-    seriesFavoritas: [],
-    cargando: false
-  });
-});
-                
+    for (let i = 0; i < seriesParseado.length; i++) {
+      fetch(`https://api.themoviedb.org/3/tv/${seriesParseado[i]}?api_key=41abfd625c63035603389ca24c10eed0`)
+        .then(response => response.json())
+        .then(data => {
+          let lista = this.state.seriesFavoritas;
+          lista.push(data);
+
+          this.setState({
+            seriesFavoritas: lista
+          });
+
+        })
+        .catch(error => console.log(error));
+    }
+  }
+
+  eliminarFavorito(id, tipo) {
+    if (tipo === "movie") {
+      let storage = JSON.parse(localStorage.getItem("favoritosMovies"))
+      if (storage == null){
+        storage = []
+      }
+
+      let nuevo = [];
+      for (let i = 0; i < storage.length; i++) {
+        if (storage[i] !== id) {
+          nuevo.push(storage[i]);
         }
-    }
+      }
 
-    render(){
-        return(
-            <section className="cardContainer">
-  <h2>Películas favoritas</h2>
-  {this.state.peliculasFavoritas.length === 0 ? (
-    <h3>No hay películas favoritas</h3>
-  ) : (
-    this.state.peliculasFavoritas.map((elemento) => (
-      <Card key={elemento.id} data={elemento} />
-    ))
-  )}
+      localStorage.setItem("favoritosMovies", JSON.stringify(nuevo));
+      let nuevasPeliculas = [];
+      for (let i = 0; i < this.state.peliculasFavoritas.length; i++) {
+        if (this.state.peliculasFavoritas[i].id !== id) {
+          nuevasPeliculas.push(this.state.peliculasFavoritas[i]);
+        }}
+        
+      this.setState({
+        peliculasFavoritas: nuevasPeliculas
+      });
+    } else {
+      let storage = JSON.parse(localStorage.getItem("favoritosSeries")) || [];
+      let nuevo = [];
+      for (let i = 0; i < storage.length; i++) {
+        if (storage[i] !== id) {
+          nuevo.push(storage[i]);
+        }
+      }
 
-  <h2>Series favoritas</h2>
-  {this.state.seriesFavoritas.length === 0 ? (
-    <h3>No hay series favoritas</h3>
-  ) : (
-    this.state.seriesFavoritas.map((elemento) => (
-      <Card key={elemento.id} data={elemento} />
-    ))
-  )}
-</section>
-        );
+      localStorage.setItem("favoritosSeries", JSON.stringify(nuevo));
+
+      let nuevasSeries = [];
+      for (let i = 0; i < this.state.seriesFavoritas.length; i++) {
+        if (this.state.seriesFavoritas[i].id !== id) {
+          nuevasSeries.push(this.state.seriesFavoritas[i]);
+        }
+      }
+
+      this.setState({
+        seriesFavoritas: nuevasSeries
+      });
     }
+  }
+
+  render() {
+    return (
+      <section className="cardContainer">
+
+        <h2>Películas favoritas</h2>
+
+        {this.state.peliculasFavoritas.length === 0 ? ( <h3>No hay películas favoritas</h3>) 
+        : (this.state.peliculasFavoritas.map(elemento => (
+            <div key={elemento.id}>
+              <Card data={elemento} eliminarFavorito={() => this.eliminarFavorito(elemento.id, "movie")}/>
+            </div>
+          ))
+        )}
+
+        <h2>Series favoritas</h2>
+
+        {this.state.seriesFavoritas.length === 0 ? (<h3>No hay series favoritas</h3>) 
+        : (this.state.seriesFavoritas.map(elemento => (
+            <div key={elemento.id}>
+              <Card data={elemento} eliminarFavorito={() => this.eliminarFavorito(elemento.id, "tv")}/>
+            </div>
+          ))
+        )}
+
+      </section>
+    );
+  }
 }
 
 export default Favoritos;
