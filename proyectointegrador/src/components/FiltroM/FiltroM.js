@@ -35,7 +35,7 @@ class FiltroM extends Component {
   }
 
     render(){
-let peliculasFiltradas = this.filtrarPeliculas(this.state.value);
+      let peliculasFiltradas = this.filtrarPeliculas(this.state.value);
         return (
       <>
         <form onSubmit={(event) => this.enviarFormulario(event)} className="search-form">

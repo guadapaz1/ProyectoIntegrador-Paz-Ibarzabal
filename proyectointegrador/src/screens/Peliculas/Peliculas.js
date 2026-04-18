@@ -25,6 +25,7 @@ class Peliculas extends Component {
         <h2 className="alert alert-primary">Todas las películas</h2>
 
         <section className="row cards">
+           
           {this.state.peliculas.length === 0 ? (<Loader />) : (
             this.state.peliculas.map((elemento, idx) => (<Card key={elemento +idx} data={elemento}/>
             ))

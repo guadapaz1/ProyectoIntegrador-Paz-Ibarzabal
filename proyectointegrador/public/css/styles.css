@@ -54,6 +54,8 @@ nav {
     gap: 15px;
 }
 
+
+
 .cardBody {
     margin-top: 20px;
     display: flex;
@@ -90,6 +92,8 @@ nav {
 
 .all-movies .single-card-movie {
     width: 15%;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 @media(min-width: 765px){
