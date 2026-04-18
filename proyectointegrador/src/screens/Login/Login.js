@@ -35,9 +35,9 @@ class Login extends Component {
       
 
       if (!mismoEmail) {
-        this.setState({ error: "El usuario no existe" });
+        this.setState({ error: "Credenciales incorrectas" });
       } else if (mismoEmail.password !== this.state.password) {
-        this.setState({ error: "La contraseña es incorrecta" });
+        this.setState({ error: "Credenciales incorrectas" });
       } else {
         this.setState({ error: "" })}
         cookies.set("session", mismoEmail)

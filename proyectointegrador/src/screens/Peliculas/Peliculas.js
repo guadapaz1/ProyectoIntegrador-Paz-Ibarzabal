@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Card from "../../components/Card/Card";
 import Loader from "../../components/Loader/Loader";
+import FiltroM from "../../components/FiltroM/FiltroM";
 
 class Peliculas extends Component {
   constructor(props) {
@@ -20,6 +21,7 @@ class Peliculas extends Component {
   render() {
     return (
       <section className="container">
+        <FiltroM/>
         <h2 className="alert alert-primary">Todas las películas</h2>
 
         <section className="row cards">

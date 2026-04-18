@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import Card from "../../components/Card/Card";
 import Loader from "../../components/Loader/Loader";
+import FiltroS from "../../components/FiltroS/FiltroS";
+
 
 class Series extends Component {
   constructor(props) {
@@ -20,6 +22,7 @@ class Series extends Component {
   render() {
     return (
       <section className="container">
+        <FiltroS/>
         <h2 className="alert alert-warning">Todas las series</h2>
 
         <section className="row cards">
