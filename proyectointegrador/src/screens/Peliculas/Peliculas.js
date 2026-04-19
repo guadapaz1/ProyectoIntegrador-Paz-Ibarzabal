@@ -7,17 +7,32 @@ class Peliculas extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      peliculas: []
+      peliculas: [],
+      page: 1
     };
   }
 
   componentDidMount() {
-    fetch("https://api.themoviedb.org/3/movie/popular?api_key=41abfd625c63035603389ca24c10eed0")
+    this.cargarPeliculas();
+  }
+
+  cargarPeliculas() {
+    fetch(`https://api.themoviedb.org/3/movie/popular?api_key=41abfd625c63035603389ca24c10eed0&page=${this.state.page}`)
       .then(response => response.json())
-      .then(data => this.setState({ peliculas: data.results }))
+      .then(data => 
+        this.setState({
+          peliculas: this.state.peliculas.concat(data.results)
+        })
+      )
       .catch(error => console.log("El error fue " + error));
   }
 
+  cargarMas() {
+    this.setState(
+      {page: this.state.page + 1},
+      () => this.cargarPeliculas() 
+    );
+  }
   render() {
     return (
       <section className="container">
@@ -31,6 +46,7 @@ class Peliculas extends Component {
             ))
           )}
         </section>
+        <button onClick={() => this.cargarMas()} className="btn btn-primary"> Cargar más </button>
       </section>
     );
   }

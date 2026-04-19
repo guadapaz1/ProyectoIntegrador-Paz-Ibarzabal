@@ -8,16 +8,27 @@ class Series extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      series: []
+      series: [],
+      page: 1
     };
   }
 
+  
   componentDidMount() {
-    fetch("https://api.themoviedb.org/3/tv/popular?api_key=41abfd625c63035603389ca24c10eed0")
+    this.cargarSeries();
+  }
+
+  cargarSeries() {
+    fetch(`https://api.themoviedb.org/3/tv/popular?api_key=41abfd625c63035603389ca24c10eed0&page=${this.state.page}`)
       .then(response => response.json())
-      .then(data => this.setState({ series: data.results }))
+      .then(data => this.setState({ series: this.state.series.concat(data.results)}))
       .catch(error => console.log("El error fue " + error));
   }
+  cargarMas() {
+    this.setState(
+      {page: this.state.page + 1},
+      () => this.cargarSeries() 
+    )}
 
   render() {
     return (
@@ -31,6 +42,7 @@ class Series extends Component {
             ))
           )}
         </section>
+        <button onClick={() => this.cargarMas()} className="btn btn-primary"> Cargar más </button>
       </section>
     );
   }
