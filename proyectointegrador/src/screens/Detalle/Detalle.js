@@ -27,12 +27,12 @@ class Detalle extends Component {
 
         {this.state.data.id === undefined ? (<Loader />) 
         : (<div>
-            <h2>{this.state.data.title || this.state.data.name}</h2>
-            <img className="detalle-img" src={"https://image.tmdb.org/t/p/w500" + this.state.data.poster_path} alt={this.state.data.title || this.state.data.name}/>
+            <h2>{this.state.data.title ? this.state.data.title : this.state.data.name}</h2>
+            <img className="detalle-img" src={"https://image.tmdb.org/t/p/w500" + this.state.data.poster_path} alt={this.state.data.title ? this.state.data.title : this.state.data.name}/>
 
             <p>Rating:{this.state.data.vote_average}</p>
 
-            <p>Fecha de estreno: {" "} {this.state.data.release_date || this.state.data.first_air_date}</p>
+            <p>Fecha de estreno: {" "} {this.state.data.release_date ? this.state.data.release_date : this.state.data.first_air_date}</p>
 
             <p>Sinopsis: {this.state.data.overview}</p>
 

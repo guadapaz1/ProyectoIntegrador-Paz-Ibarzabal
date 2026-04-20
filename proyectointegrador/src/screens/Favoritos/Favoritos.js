@@ -81,7 +81,8 @@ class Favoritos extends Component {
         peliculasFavoritas: nuevasPeliculas
       });
     } else {
-      let storage = JSON.parse(localStorage.getItem("favoritosSeries")) || [];
+      let data = JSON.parse(localStorage.getItem("favoritosSeries"));
+      let storage = data ? data : [];
       let nuevo = [];
       for (let i = 0; i < storage.length; i++) {
         if (storage[i] !== id) {
