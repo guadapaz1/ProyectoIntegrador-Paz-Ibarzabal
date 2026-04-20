@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import Card from "../Card/Card";
+import Loader from "../Loader/Loader"
 
 class FiltroS extends Component {
   constructor() {
@@ -41,7 +42,7 @@ let seriesFiltradas = this.filtrarSeries(this.state.value);
         <form onSubmit={(event) => this.enviarFormulario(event)} className="search-form">
           <input type="text" className="" name="value" placeholder="Buscar..." value={this.state.value} onChange={(event) => this.controlarCambios(event)} />
         </form>
-        {this.state.datos.length === 0 ? (<h2>Cargando...</h2>) : (seriesFiltradas.map((i) => (<Card key={i.id} data={i}/>)))}
+        {this.state.datos.length === 0 ? <Loader/> : (seriesFiltradas.map((i) => (<Card key={i.id} data={i}/>)))}
       </>
 
     );

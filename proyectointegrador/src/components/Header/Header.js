@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Cookies from "universal-cookie"
 import { Link } from "react-router-dom"
+import "./css/style.css"
 
 const cookies = new Cookies()
 

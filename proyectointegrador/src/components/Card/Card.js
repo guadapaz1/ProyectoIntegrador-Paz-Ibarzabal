@@ -9,11 +9,19 @@ class Card extends Component {
     super(props);
     this.state = {
       mostrar: false,
-      esFavorito: false
+      esFavorito: false,
+       generos: []
     };
   }
 componentDidMount() {
+
   
+    let tip = this.props.data.title ? "movie" : "tv";
+  fetch(`https://api.themoviedb.org/3/genre/${tip}/list?api_key=41abfd625c63035603389ca24c10eed0`)
+    .then(response => response.json())
+    .then(data => this.setState({ generos: data.genres }))
+    .catch(error => console.log(error));
+
     let tipo = this.props.data.title ? "favoritosMovies" : "favoritosSeries";
 
     let storage = localStorage.getItem(tipo);
@@ -78,8 +86,26 @@ sacarFav(id){
     });
   }
 
+
   render() {
     let user = cookies.get("session");
+    let nombresGeneros = [];
+
+  if (this.props.data.genre_ids && this.state.generos.length > 0) {
+  for (let i = 0; i < this.props.data.genre_ids.length; i++) {
+    for (let j = 0; j < this.state.generos.length; j++) {
+      if (this.props.data.genre_ids[i] === this.state.generos[j].id) {
+        nombresGeneros.push(this.state.generos[j].name);}
+    }
+  }
+}
+
+let textoGeneros = "";
+              for (let i = 0; i < nombresGeneros.length; i++) { 
+              if (i === 0) {textoGeneros = nombresGeneros[i];} 
+              else {textoGeneros = textoGeneros + ", " + nombresGeneros[i];}
+              }
+
     return (
       <article className="single-card-playing">
         <img src={"https://image.tmdb.org/t/p/w500" + this.props.data.poster_path} alt= ""/>
@@ -87,6 +113,8 @@ sacarFav(id){
             <h3>{this.props.data.title || this.props.data.name}</h3>
 
             {this.state.mostrar === true ? <p className="card-text">{this.props.data.overview}</p> : ""}
+
+            <p>Género: {textoGeneros}</p>
 
             {this.state.mostrar === false ? (<button className="btn alert-primary"  onClick={() => this.mostrarDescripcion()}>Ver descripción</button>) 
               : (<button className="btn alert-primary"  onClick={() => this.ocultarDescripcion()}>Ocultar descripción</button>
@@ -108,4 +136,4 @@ sacarFav(id){
   }
 }
 
-export default Card;
+export default Card

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Card from '../../components/Card/Card';
+import Loader from '../../components/Loader/Loader';
 
 class ResultadosBusqueda extends Component {
     constructor(props){
@@ -45,7 +46,7 @@ class ResultadosBusqueda extends Component {
                 <h2>Resultados de {this.props.match.params.tipo} para: {this.props.match.params.busqueda}</h2>
                 <section className="cards">
                 {this.state.cargando ? (
-                    <h3>Cargando...</h3>
+                    <h3><Loader/></h3>
                 ) : this.state.resultados.length === 0 ? (
                     <h3>No se encontraron resultados</h3>
                 ) : (

@@ -1,22 +1,4 @@
-nav {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    background-color: #eee;
-    border-radius: 4px;
-    margin-bottom: 20px;
-    padding: 10px;
-}
-.nav {
-    margin: 0 !important;
-}
-.nav a{
-    color: #444;
-    text-decoration: none;
-}
-.nav a:hover{
-    font-weight: bold;
-}
+
 .search-form, .filter-form {
     padding: .5rem 0;
     margin-bottom: 20px;
