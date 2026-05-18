@@ -1,20 +1,15 @@
-import React, { Component } from "react";
+import React, {useState} from "react"
 import Cookies from "universal-cookie";
 import { Link } from "react-router-dom";
 
-const cookies = new Cookies();
+ const cookies = new Cookies();
 
-class Login extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      email: "",
-      password: "",
-      error: ""
-    };
-  }
+function Login(props) {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const[error, setError] = useState("");
 
-  evitarSubmit(event) {
+  function evitarSubmit(event) {
     event.preventDefault();
 
     let storage = localStorage.getItem("usuarios");
@@ -27,40 +22,40 @@ class Login extends Component {
     let mismoMail = null;
 
     for (let i = 0; i < usuarios.length; i++) {
-      if (usuarios[i].email === this.state.email) {
+      if (usuarios[i].email === email) {
         mismoMail = usuarios[i];
       }
     }
 
     if (mismoMail === null) {
-      this.setState({ error: "Credenciales incorrectas" });
-    } else if (mismoMail.password !== this.state.password) {
-      this.setState({ error: "Credenciales incorrectas" });
+      setError("Credenciales incorrectas");
+    } else if (mismoMail.password !== password) {
+      seterror("Credenciales incorrectas");
     } else {
-      this.setState({ error: "" });
+      seterror("");
       cookies.set("session", mismoMail);
       this.props.history.push("/");
     }
   }
 
-  controlarCambios(event) {
+  function controlarCambios(event) {
     if (event.target.name === "email") {
-      this.setState({ email: event.target.value });
+      setEmail(event.target.value);
     } else if (event.target.name === "password") {
-      this.setState({ password: event.target.value });
-    }
+      setPassword(event.target.value);
   }
-
-  render() {
+  }
+}
+  
     return (
       <div className="row justify-content-center">
         <div className="col-6">
-          <form onSubmit={(event) => this.evitarSubmit(event)}>
+          <form onSubmit={(event) => evitarSubmit(event)}>
             <div className="form-group">
               <label htmlFor="email">Email</label>
               <input
-                value={this.state.email}
-                onChange={(event) => this.controlarCambios(event)}
+                value={email}
+                onChange={(event) => controlarCambios(event)}
                 name="email"
                 className="form-control"
                 id="email"
@@ -72,8 +67,8 @@ class Login extends Component {
             <div className="form-group">
               <label htmlFor="password">Contraseña</label>
               <input
-                value={this.state.password}
-                onChange={(event) => this.controlarCambios(event)}
+                value={password}
+                onChange={(event) => controlarCambios(event)}
                 name="password"
                 className="form-control"
                 id="password"
@@ -82,7 +77,7 @@ class Login extends Component {
               />
             </div>
 
-            <p>{this.state.error}</p>
+            <p>{error}</p>
 
             <button type="submit" className="btn btn-primary btn-block">
               Iniciar sesión
@@ -95,7 +90,6 @@ class Login extends Component {
         </div>
       </div>
     );
-  }
-}
+
 
 export default Login;
